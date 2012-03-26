@@ -1,0 +1,194 @@
+﻿<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8" />
+
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=device-width" />
+
+	<title>Survey Interaction</title>
+  
+	<!-- Included CSS Files -->
+	<link rel="stylesheet" href="stylesheets/foundation.css">
+	<link rel="stylesheet" href="stylesheets/app.css">
+	<link rel="stylesheet" href="stylesheets/modal.css">
+	
+	<!-- libs -->
+	<script type="text/javascript" src="javascripts/jquery.min.js"></script>
+	<script type="text/javascript" src="javascripts/underscore.js"></script>
+	<script type="text/javascript" src="javascripts/backbone.js"></script>
+	<script type="text/javascript" src="javascripts/backbone.localStorage.js"></script>
+	<script type="text/javascript" src="javascripts/json2.js"></script>
+	<script type="text/javascript" src="javascripts/bootstrap-modal.js"></script>	
+	<!-- my code -->
+	<script type="text/javascript" src="javascripts/models/question.js"></script>
+	<script type="text/javascript" src="javascripts/models/section.js"></script>
+	<script type="text/javascript" src="javascripts/controller/askme_controller.js"></script>
+	<script type="text/javascript" src="javascripts/views/questionView.js"></script>
+	<script type="text/javascript" src="javascripts/views/questionEditView.js"></script>
+	
+	<script type="text/javascript" src="javascripts/views/sectionView.js"></script>
+	
+	
+	
+	
+	
+	
+</head>
+<script type="text/javascript">
+		var App = {
+			Views:  {},
+			Controllers: {},
+			Models: {},
+			Collections: {},
+			init: function() {
+				new Askme_Controller();
+				Backbone.history.start();
+			}
+		};
+	
+		$(function() {
+			alert("DOM is ready");
+			
+			//var view = new Askme_Question_View();
+			//view.render();
+			/*
+			App.init();
+			var q = new Askme_MultipleChoice_Question({title: "mc question", order: window.Section.question_order()});
+			window.Section.create(q.attributes, {
+				success: function(model, resp) {
+					alert('s');
+				},
+				error: function(model, resp) {
+					alert('f');
+				}
+			});
+			q.populateBody({"answer1": {"description": "jdksjds", "is_answered": "asjfsjh ghh;dgh"}});
+			alert(JSON.stringify(q.get("body"), null, '\t'));
+			alert(JSON.stringify(q.get("body").answer1.description));
+			window.Section.each(function(q) {
+				alert(q.title);
+				q.destroy_question();
+			}); */
+			//window.Section.add(q);
+			
+		});
+	</script>
+<body>
+	<hgroup style="text-align:center;">
+		<h1>Survey Interaction with Backbone.js	</h1>
+		<h5>Created by Rustem Kamun </h5>
+	</hgroup>
+	<div class="row">
+		<div class="three columns">
+		
+			<div class="palette">
+										
+				<a href="#" class="nice radius button">Сохранить</a>
+				<h5 style="padding-top: 1.5em;">Инструменты</h5>
+				<hr />
+				<a href="#">Демографические данные</a>
+				<hr />
+				<ul>
+					<!--Отсортировано по частоте использования-->
+					<li><a href="#create-question-form" id="mul-choice" class="create-q">Несколько вариантов ответа</a></li>
+					<li><a href="#create-question-form" id="mul-choice" class="create-q">Открытый вопрос</a></li>
+					<li><a href="#create-question-form" id="mul-choice" class="create-q">Матрица</a></li>
+					<li><a href="#create-question-form" id="mul-choice" class="create-q">Оценка</a></li>
+				</ul>
+				<hr />
+				<ul>
+					<!--Отсортировано по алфавиту, потому что нестандартные поля, не так часто используются-->
+					<li><a href="#">Дата и время</a></li>
+					<li><a href="#">Изображение</a></li>
+					<li><a href="#">Ссылка</a></li>
+					<li><a href="#">Текст</a></li>
+					<li><a href="#">Числа</a></li>
+				</ul>
+				<hr />
+				<a href="#">Логика пропуска</a>
+			</div>
+								
+		</div>
+		<div class="nine columns">
+			<form class="nice">
+				<ol>
+					
+				</ol>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="three columns"></div>
+		<div class="nine columns">
+			<div id="create-question-form" name="create-question-form">
+				
+			</div>
+		</div>
+	</div>
+	<script type="text/template" id="item-template">
+      <div class="todo <%= done ? 'done' : '' %>">
+        <div class="display">
+          <input class="check" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
+          <div class="todo-text"></div>
+          <span class="todo-destroy"></span>
+        </div>
+        <div class="edit">
+          <input class="todo-input" type="text" value="" />
+        </div>
+      </div>
+    </script>
+	<script type="text/template" id="mc-question-template">
+		<li>
+		<fieldset>
+			<h5><%= title %> <small>(<a href="#" class="edit">редактировать</a>)</small></h5>
+			<% var $i=1;   _.each(body, function(val, key) { %>
+			<label for="radio[<%= $i %>]"><input type="radio" name="radio_<%= order %>" id="radio[<%= $i %>]"> 
+				<%= val.description %>
+			</label>
+			<% $i++; }); %>
+		</fieldset>
+		<fieldset style="padding-bottom: 1em; display:none;">
+			<h5>Edit: Вы довольны своей зарплатой?</h5>
+			<label for="question1">Введите вопрос</label>
+			<input type="text" class="input-text" name="" value="Вы довольны своей зарплатой?" id="question1" />
+			<label for="abcd">Варианты строк: введите каждый вариант в отдельной строке</label>
+			<textarea style="height: 8em;" id="abcd" class="large"></textarea>
+			<div class="row">
+				<div class="six columns"><a href="#" class="small nice radius button">Применить</a></div>
+				<div class="six columns" style="text-align: right;">
+					<a href="#" class="small white radius button">Отменить изменения</a> или <a href="#">удалить</a>
+				</div>
+			</div>
+		</fieldset>
+	</li>
+									
+				
+				
+	</script>
+	<script type="text/template" id="create-mul-choice-form">
+	<div id="create-question-form" class="modal" name="create-question-form">
+		<div class="modal-header">
+			<a class="close" data-dismiss="modal">x</a>
+			<h3>Create Question </h3>
+		</div>
+		<div class="modal-body">
+		<form class="nice">
+			<fieldset style="padding-bottom: 1em;">
+				<h5>Правка: Вы довольны своей зарплатой?</h5>
+				<label for="question1">Введите вопрос</label>
+				<input type="text" class="input-text" name="title" value="Вы довольны своей зарплатой?" id="question1" />
+				<label for="abcd">Варианты строк: введите каждый вариант в отдельной строке</label>
+				<textarea style="height: 8em;" id="abcd" class="large" name="answers"></textarea>
+				<div class="row">
+					<div class="six columns"><a href="#" id="create-question" class="small nice radius button save">Создать</a></div>
+					<div class="six columns" style="text-align: right;">
+					 <a href="#" id="discard-question" class="small white radius button cancel">Отменить создание</a>
+					</div>
+				</div>
+			</fieldset>
+		</form>
+		</div>
+	</div>
+	</script>
+</body>
