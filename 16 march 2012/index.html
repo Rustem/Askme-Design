@@ -11,15 +11,16 @@
 	<!-- Included CSS Files -->
 	<link rel="stylesheet" href="stylesheets/foundation.css">
 	<link rel="stylesheet" href="stylesheets/app.css">
-	<link rel="stylesheet" href="stylesheets/modal.css">
 	
 	<!-- libs -->
 	<script type="text/javascript" src="javascripts/jquery.min.js"></script>
+	<script type="text/javascript" src="javascripts/jquery_helpers.js"></script>
+	
+	<script type="text/javascript" src="javascripts/reveal.js"></script>
 	<script type="text/javascript" src="javascripts/underscore.js"></script>
 	<script type="text/javascript" src="javascripts/backbone.js"></script>
 	<script type="text/javascript" src="javascripts/backbone.localStorage.js"></script>
 	<script type="text/javascript" src="javascripts/json2.js"></script>
-	<script type="text/javascript" src="javascripts/bootstrap-modal.js"></script>	
 	<!-- my code -->
 	<script type="text/javascript" src="javascripts/models/question.js"></script>
 	<script type="text/javascript" src="javascripts/models/section.js"></script>
@@ -75,10 +76,16 @@
 		});
 	</script>
 <body>
+	
+	<div class="container">
+		<form type="text/template" id="myModal" class="t-modal nice js-mul-choice-form">
+			
+		</form>
 	<hgroup style="text-align:center;">
 		<h1>Survey Interaction with Backbone.js	</h1>
 		<h5>Created by Rustem Kamun </h5>
 	</hgroup>
+	
 	<div class="row">
 		<div class="three columns">
 		
@@ -126,20 +133,8 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/template" id="item-template">
-      <div class="todo <%= done ? 'done' : '' %>">
-        <div class="display">
-          <input class="check" type="checkbox" <%= done ? 'checked="checked"' : '' %> />
-          <div class="todo-text"></div>
-          <span class="todo-destroy"></span>
-        </div>
-        <div class="edit">
-          <input class="todo-input" type="text" value="" />
-        </div>
-      </div>
-    </script>
 	<script type="text/template" id="mc-question-template">
-		<li>
+		<li id="<%= order %>">
 		<fieldset>
 			<h5><%= title %> <small>(<a href="#" class="edit">редактировать</a>)</small></h5>
 			<% var $i=1;   _.each(body, function(val, key) { %>
@@ -148,47 +143,67 @@
 			</label>
 			<% $i++; }); %>
 		</fieldset>
-		<fieldset style="padding-bottom: 1em; display:none;">
-			<h5>Edit: Вы довольны своей зарплатой?</h5>
+		
+	</li>
+	</script>
+	<script type="text/template" id="js-create-question-mc-form">
+		<h4 class="t-modal__header"><% title %></h4>
+			<div class="t-modal__body">
+					<label for="js-title">Введите вопрос:</label>
+					<input class="input-text" type="text" id="js-title" name="js-title" value="<%= title %>" />
+					
+					<label for="js-answers">Варианты строк:</label>
+					<textarea class="large" name="js-answers" id="js-answers" rows="4" placeholder="Введите каждый вариант в отдельной строке"></textarea>
+		</div>
+		<div class="t-modal__footer">
+			<hr />
+			<div class="row">
+				<div class="six columns"><a href="#" class="js-modal--close small nice radius button js-modal--apply">Применить</a></div>
+				<div class="six columns" style="text-align: right;">
+					<a href="#" class="small white radius button js-modal--close">Отменить изменения</a>
+				</div>
+			</div>
+		</div>
+		
+	</script>
+	<script type="text/template" id="js-edit-question-mc-form">
+		<h4 class="t-modal__header"><% title %></h4>
+			<div class="t-modal__body">
+					<label for="js-title-<%= id %>">Введите вопрос:</label>
+					<input class="input-text" type="text" id="js-title-<%= id %>" name="js-title-<%= id %>" value="<%= title %>" />
+					
+					<label for="js-answers-<%= id %>">Варианты строк:</label>
+					<textarea class="large" name="js-answers-<%= id %>" id="js-answers-<%= id %>" rows="4" placeholder="Введите каждый вариант в отдельной строке"></textarea>
+		</div>
+		<div class="t-modal__footer">
+			<hr />
+			<div class="row">
+				<div class="six columns"><a href="#" class="js-modal--close small nice radius button js-modal--apply">Применить</a></div>
+				<div class="six columns" style="text-align: right;">
+					<a href="#" class="small white radius button js-modal--close">Отменить изменения</a>
+				</div>
+			</div>
+		</div>
+		
+	</script>
+	<script type="text/template" id="edit-mul-choice-form">
+		<fieldset style="padding-bottom: 1em;" class="">
+			<h5>Edit: <%= title %></h5>
 			<label for="question1">Введите вопрос</label>
 			<input type="text" class="input-text" name="" value="Вы довольны своей зарплатой?" id="question1" />
 			<label for="abcd">Варианты строк: введите каждый вариант в отдельной строке</label>
-			<textarea style="height: 8em;" id="abcd" class="large"></textarea>
+			<textarea style="height: 8em;" id="abcd" class="large">
+				<% _.each(body, function(val, key) { %>
+					 <%= val.description %>
+				<% }); %>
+			</textarea>
 			<div class="row">
-				<div class="six columns"><a href="#" class="small nice radius button">Применить</a></div>
+				<div class="six columns"><a href="#" id="create-question" class="small nice radius button save">Применить</a></div>
 				<div class="six columns" style="text-align: right;">
-					<a href="#" class="small white radius button">Отменить изменения</a> или <a href="#">удалить</a>
+					<a href="#" id="discard-question" class="small white radius button cancel">Отменить изменения</a> или <a href="#">удалить</a>
 				</div>
 			</div>
 		</fieldset>
-	</li>
-									
-				
-				
 	</script>
-	<script type="text/template" id="create-mul-choice-form">
-	<div id="create-question-form" class="modal" name="create-question-form">
-		<div class="modal-header">
-			<a class="close" data-dismiss="modal">x</a>
-			<h3>Create Question </h3>
-		</div>
-		<div class="modal-body">
-		<form class="nice">
-			<fieldset style="padding-bottom: 1em;">
-				<h5>Правка: Вы довольны своей зарплатой?</h5>
-				<label for="question1">Введите вопрос</label>
-				<input type="text" class="input-text" name="title" value="Вы довольны своей зарплатой?" id="question1" />
-				<label for="abcd">Варианты строк: введите каждый вариант в отдельной строке</label>
-				<textarea style="height: 8em;" id="abcd" class="large" name="answers"></textarea>
-				<div class="row">
-					<div class="six columns"><a href="#" id="create-question" class="small nice radius button save">Создать</a></div>
-					<div class="six columns" style="text-align: right;">
-					 <a href="#" id="discard-question" class="small white radius button cancel">Отменить создание</a>
-					</div>
-				</div>
-			</fieldset>
-		</form>
-		</div>
-	</div>
-	</script>
+ </div>
 </body>

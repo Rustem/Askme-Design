@@ -22,17 +22,11 @@
 		load_create_new_question: function(event) {
 			// tomorrow
 			event.preventDefault();
-			alert(event.target.id);
-			alert('form loaded');
+			if(event.target.id == 'mul-choice') {
+				
+			}
+			
 			new Askme_QuestionEdit_View({model: new Askme_Question()}).render();
-			// var qType = event.target.id;
-			
-			// var create_form_template = null;
-			// if(qType == 'mul-choice') {
-				// create_form_template = _.template($('#create-mul-choice-form').html());
-			// }
-			// $('#create-question-form .nice').html(create_form_template);
-			
 		},
 		
 		addOne: function(question) {
@@ -43,7 +37,7 @@
 		addAll: function() {
 			alert('reset');
 			window.Section.each(this.addOne);
-			alert(this.$("ol").html());
+			//alert(this.$("ol").html());
 		}
 		
 		

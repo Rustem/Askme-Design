@@ -1,3 +1,6 @@
+ /* 
+   form for editing $('#edit-mul-choice-form');
+ */
  $(function() {
 	
 	Askme_Question_View = Backbone.View.extend({
@@ -20,12 +23,14 @@
 		
 		render: function() {
 			$(this.el).html(this.template(this.model.toJSON()));
-			alert("question render " + $(this.el).html());
+			//alert("question render " + $(this.el).html());
 			return this;
 		},
 		
-		edit: function() {
+		edit: function(e) {
 			alert('editable');
+			new Askme_QuestionEdit_View({model: this.model}).render();
+			//$($(e.target).parents('li')[0]).html(compiledTemplate(this.model.toJSON()));
 		},
 		
 		del: function() {

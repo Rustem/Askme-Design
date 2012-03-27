@@ -5,13 +5,24 @@ var Askme_Question = Backbone.Model.extend({
 	//contructor
 	initialize: function(title) {
 		this.title = title + "";
+		if(!this.get("body")) {
+			this.set({"body": this.body()});
+		}
+	},
+	body: function() {
+		 return {
+					"answer1": {"description":"this is first answer to your question", "is_answered": false},
+					"answer2": {"description":"this is second answer to your question", "is_answered": false},
+					"answer3": {"description":"this is third answer to your question", "is_answered": false},
+					"answer4": {"description":"this is fourth answer to your question", "is_answered": false},
+				};
 	},
 	// attributes
-	
 	defaults: {
 		title: "Default Question Title",
 		author: "Rustem Kamun",
 		order: 0
+		
 	},
 	
 	destroy_question: function () {
@@ -36,6 +47,11 @@ Askme_Question.prototype.populateBody = function(newBody) {
 
 var Askme_MultipleChoice_Question = Askme_Question.extend({
 	// default body
+	initialize: function() {
+		if(!this.get("body")) {
+			this.set({"body": this.body()});
+		}
+	},
 	body: function() {
 		 return {
 					"answer1": {"description":"this is first answer to your question", "is_answered": false},

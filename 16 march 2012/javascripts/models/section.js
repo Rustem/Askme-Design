@@ -8,7 +8,9 @@
 */
 Askme_Section = Backbone.Collection.extend({
 	DEFAULT_NAME: "Default section",
+	
 	localStorage: new Store("Survey Storage"),
+	
 	initialize: function() {
 		if(!this.name) {
 			this.name = this.DEFAULT_NAME;
@@ -24,6 +26,7 @@ Askme_Section = Backbone.Collection.extend({
 	question_order: function() {
 		
 		if(!this.length) return 1;
+		
 		return this.last().get('order') + 1;
 	},
 	
@@ -36,6 +39,10 @@ Askme_Section = Backbone.Collection.extend({
 window.Section = new Askme_Section();
 
 window.Section.on("add", function(qq) {
-				alert(qq.get("title") + " created!");
+				alert("created" + qq.get("id"));
 			});
+window.Section.on("remove", function(qq) {
+	alert(qq.get("title") + " created!");
+});
+			
 			

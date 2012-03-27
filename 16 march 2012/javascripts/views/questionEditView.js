@@ -1,29 +1,43 @@
+
 $(function() {
+
 Askme_QuestionEdit_View = Backbone.View.extend({
 	events: {
-		"click .save" 		: "save",
-		"click .cancel"		: "cancel",
-		"submit form"		: "save"
+		"click .js-modal--apply" 		: "save",
+		"click .cancel"					: "cancel",
+		"submit .js-modal--apply"		: "save"
 	},
-	template: _.template($('#create-mul-choice-form').html()),
+	el: $('.js-mul-choice-form'),
+	template: _.template($('#js-create-question-mc-form').html()),
 	initialize: function() {
 		_.bindAll(this, 'render', 'unrender', 'save', 'cancel');
 	},
-	
+	el: $('.t-modal'),
+	useModal: true,
 	render: function() {
-		//var template = _.template($('#create-mul-choice-form').html());
+		
+		if(!this.model.isNew()) {
+			this.template = _.template($('#js-edit-question-mc-form').html());
+		}
 		$(this.el).html(this.template(this.model.toJSON()));
-		//alert($(this.el).html());
+		
 		$('body').append(this.el);
-		$(this.el).modal({
-			backdrop: true,
-			keyboard: false,
-			show: true
-		});
+		
+		$(this.el).reveal();
+		
+		var body = this.model.get("body");
+		if(body) {
+			var text = '';
+			var textArea = $('textarea[name=js-answers-'+ this.model.id +']');
+			_.each(body, function(val, key) { 
+				textArea.insertAtCaret(val.description+'\n');
+			});
+		}
 		
 	},
 	unrender: function() {
-		$(this.el).modal('hide');
+		//$(this.el).reveal({close: true});
+		
 		$(this.el).remove();
 	},
 	/* 
@@ -34,24 +48,9 @@ Askme_QuestionEdit_View = Backbone.View.extend({
 	save: function(e) {
 		e.preventDefault();
 		try {
-			var title = this.$('input[name=title]').val();
-			var answerVars = (this.$('textarea[name=answers]').val()).split('\n');
-			answerVars = _.compact(answerVars);
-			
-			var body = {};
-			// populate body array with new body
-			_.each(answerVars, function(cur, idx) {
-				body["answer_"+(idx+1)] = {"is_answered": false, "description": cur};
-			});
-			alert(JSON.stringify(body));
-			this.model.set({
-							"title": title,
-							"order": window.Section.question_order(),
-							"body": body
-						});
-			// alert(JSON.stringify(this.model.toJSON()), null, '\t');
-			
-			window.Section.create(this.model.toJSON());
+			// store params from the form
+			this.storeParams();
+			this.createOrUpdateModel();
 			
 			this.unrender();
 		}
@@ -63,6 +62,44 @@ Askme_QuestionEdit_View = Backbone.View.extend({
 	cancel: function(e) {
 		e.preventDefault();
 		this.unrender();
+	},
+	storeParams: function() {
+		if(this.model.isNew()) {
+			var title = this.$('input[name=js-title]').val();
+			var answerVars = (this.$('textarea[name=js-answers]').val()).split('\n');
+		}
+		else {
+			var title = this.$('input[name=js-title-'+this.model.id+']').val();
+			var answerVars = (this.$('textarea[name=js-answers-'+this.model.id+']').val()).split('\n');
+		}
+		answerVars = _.compact(answerVars);
+		var body = {};
+			// populate body array with new body
+		_.each(answerVars, function(cur, idx) {
+			body["answer_"+(idx+1)] = {"is_answered": false, "description": cur};
+		});
+		if(this.model.isNew()) {
+			this.model.set({
+							"title": title,
+							"order": window.Section.question_order(),
+							"body": body
+			});
+		}
+		else {
+			this.model.set({
+							"title": title,
+							"body": body
+			});
+		}
+		
+	},
+	createOrUpdateModel: function() {
+		if(!this.model.isNew()) {
+				this.model.save();
+		}
+		else {
+			window.Section.create(this.model.toJSON());
+		}
 	}
 	
 });
