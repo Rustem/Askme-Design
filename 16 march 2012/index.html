@@ -15,6 +15,7 @@
 	<!-- libs -->
 	<script type="text/javascript" src="javascripts/jquery.min.js"></script>
 	<script type="text/javascript" src="javascripts/jquery_helpers.js"></script>
+	<script type="text/javascript" src="javascripts/general_settings.js"></script>
 	
 	<script type="text/javascript" src="javascripts/reveal.js"></script>
 	<script type="text/javascript" src="javascripts/underscore.js"></script>
@@ -50,28 +51,6 @@
 	
 		$(function() {
 			alert("DOM is ready");
-			
-			//var view = new Askme_Question_View();
-			//view.render();
-			/*
-			App.init();
-			var q = new Askme_MultipleChoice_Question({title: "mc question", order: window.Section.question_order()});
-			window.Section.create(q.attributes, {
-				success: function(model, resp) {
-					alert('s');
-				},
-				error: function(model, resp) {
-					alert('f');
-				}
-			});
-			q.populateBody({"answer1": {"description": "jdksjds", "is_answered": "asjfsjh ghh;dgh"}});
-			alert(JSON.stringify(q.get("body"), null, '\t'));
-			alert(JSON.stringify(q.get("body").answer1.description));
-			window.Section.each(function(q) {
-				alert(q.title);
-				q.destroy_question();
-			}); */
-			//window.Section.add(q);
 			
 		});
 	</script>
@@ -117,7 +96,7 @@
 			</div>
 								
 		</div>
-		<div class="nine columns">
+		<div class="nine columns js-questions--layout">
 			<form class="nice">
 				<ol>
 					
@@ -133,18 +112,16 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/template" id="mc-question-template">
-		<li id="<%= order %>">
+	<!-- form templates (patterns)  -->
+	<script type="text/template" id="js-render-question--mc-form">
 		<fieldset>
 			<h5><%= title %> <small>(<a href="#" class="edit">редактировать</a>)</small></h5>
 			<% var $i=1;   _.each(body, function(val, key) { %>
-			<label for="radio[<%= $i %>]"><input type="radio" name="radio_<%= order %>" id="radio[<%= $i %>]"> 
+			<label for="radio_<%= $i %>_<%= order %>_<%= id %>"><input type="radio" name="radio_<%= $i %>_<%= order %>_<%= id %>" id="radio_<%= $i %>_<%= order %>_<%= id %>"> 
 				<%= val.description %>
 			</label>
 			<% $i++; }); %>
 		</fieldset>
-		
-	</li>
 	</script>
 	<script type="text/template" id="js-create-question-mc-form">
 		<h4 class="t-modal__header"><% title %></h4>
@@ -158,7 +135,7 @@
 		<div class="t-modal__footer">
 			<hr />
 			<div class="row">
-				<div class="six columns"><a href="#" class="js-modal--close small nice radius button js-modal--apply">Применить</a></div>
+				<div class="six columns"><a href="#" class="small nice radius button js-modal--apply">Применить</a></div>
 				<div class="six columns" style="text-align: right;">
 					<a href="#" class="small white radius button js-modal--close">Отменить изменения</a>
 				</div>
@@ -178,7 +155,7 @@
 		<div class="t-modal__footer">
 			<hr />
 			<div class="row">
-				<div class="six columns"><a href="#" class="js-modal--close small nice radius button js-modal--apply">Применить</a></div>
+				<div class="six columns"><a href="#" class="small nice radius button js-modal--apply">Применить</a></div>
 				<div class="six columns" style="text-align: right;">
 					<a href="#" class="small white radius button js-modal--close">Отменить изменения</a>
 				</div>
@@ -186,24 +163,6 @@
 		</div>
 		
 	</script>
-	<script type="text/template" id="edit-mul-choice-form">
-		<fieldset style="padding-bottom: 1em;" class="">
-			<h5>Edit: <%= title %></h5>
-			<label for="question1">Введите вопрос</label>
-			<input type="text" class="input-text" name="" value="Вы довольны своей зарплатой?" id="question1" />
-			<label for="abcd">Варианты строк: введите каждый вариант в отдельной строке</label>
-			<textarea style="height: 8em;" id="abcd" class="large">
-				<% _.each(body, function(val, key) { %>
-					 <%= val.description %>
-				<% }); %>
-			</textarea>
-			<div class="row">
-				<div class="six columns"><a href="#" id="create-question" class="small nice radius button save">Применить</a></div>
-				<div class="six columns" style="text-align: right;">
-					<a href="#" id="discard-question" class="small white radius button cancel">Отменить изменения</a> или <a href="#">удалить</a>
-				</div>
-			</div>
-		</fieldset>
-	</script>
+	
  </div>
 </body>

@@ -82,9 +82,11 @@
       modal.bind('reveal:open.reveal', openAnimation);
 
       function closeAnimation() {
+        alert('executed');
         if (!locked) {
           lockModal();
           if (options.animation === "fadeAndPop") {
+            alert('executed');
             modal.animate({
               "top":  $(document).scrollTop() - topOffset + 'px',
               "opacity": 0
@@ -96,6 +98,7 @@
             });
           }
           if (options.animation === "fade") {
+
             modal.animate({
               "opacity" : 0
             }, options.animationSpeed, function () {

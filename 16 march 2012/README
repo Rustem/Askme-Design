@@ -4,9 +4,11 @@ KOTOVU:
 3. https://rapportive.com/
 
 KAMUNU:
-1. JS interaction -> edit, destroy, create
-2. Views: Other types
+1. JS interaction -> edit, destroy, create		-- done 80%
+2. Views: Other types						
 3. Models: Other types
 
-Models, Collection 
-Models, Collection 
+Models, Collection 								-- done 50%
+Models, Collection 								-- done 50%
+
+fixed one issue

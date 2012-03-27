@@ -8,7 +8,7 @@ Askme_QuestionEdit_View = Backbone.View.extend({
 		"submit .js-modal--apply"		: "save"
 	},
 	el: $('.js-mul-choice-form'),
-	template: _.template($('#js-create-question-mc-form').html()),
+	template: _.template($($.globals.questionTemplateForms[0].mc.create).html()),
 	initialize: function() {
 		_.bindAll(this, 'render', 'unrender', 'save', 'cancel');
 	},
@@ -17,7 +17,7 @@ Askme_QuestionEdit_View = Backbone.View.extend({
 	render: function() {
 		
 		if(!this.model.isNew()) {
-			this.template = _.template($('#js-edit-question-mc-form').html());
+			this.template = _.template($($.globals.questionTemplateForms[0].mc.edit).html());
 		}
 		$(this.el).html(this.template(this.model.toJSON()));
 		
@@ -36,9 +36,11 @@ Askme_QuestionEdit_View = Backbone.View.extend({
 		
 	},
 	unrender: function() {
-		//$(this.el).reveal({close: true});
+		// close and and close animation are turned off
+		$(this.el).trigger('reveal:close');
+		//$(this.el).trigger('reveal:close');
+		$(this.el).remove();		
 		
-		$(this.el).remove();
 	},
 	/* 
 		called save() asynchronous funciton it tries to save new model in collection
@@ -50,6 +52,7 @@ Askme_QuestionEdit_View = Backbone.View.extend({
 		try {
 			// store params from the form
 			this.storeParams();
+
 			this.createOrUpdateModel();
 			
 			this.unrender();
@@ -82,7 +85,8 @@ Askme_QuestionEdit_View = Backbone.View.extend({
 			this.model.set({
 							"title": title,
 							"order": window.Section.question_order(),
-							"body": body
+							"body": body,
+							"id": this.model.id
 			});
 		}
 		else {
