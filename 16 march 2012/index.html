@@ -50,7 +50,7 @@
 		};
 	
 		$(function() {
-			alert("DOM is ready");
+			
 			
 		});
 	</script>
@@ -78,8 +78,8 @@
 				<ul>
 					<!--Отсортировано по частоте использования-->
 					<li><a href="#create-question-form" id="mul-choice" class="create-q">Несколько вариантов ответа</a></li>
-					<li><a href="#create-question-form" id="mul-choice" class="create-q">Открытый вопрос</a></li>
-					<li><a href="#create-question-form" id="mul-choice" class="create-q">Матрица</a></li>
+					<li><a href="#create-question-form" id="essay" class="create-q">Открытый вопрос</a></li>
+					<li><a href="#create-question-form" id="rating-scale" class="create-q">Матрица</a></li>
 					<li><a href="#create-question-form" id="mul-choice" class="create-q">Оценка</a></li>
 				</ul>
 				<hr />
@@ -115,7 +115,7 @@
 	<!-- form templates (patterns)  -->
 	<script type="text/template" id="js-render-question--mc-form">
 		<fieldset>
-			<h5><%= title %> <small>(<a href="#" class="edit">редактировать</a>/<a href="#" class="destroy">удалить</a>)</small></h5>
+			<h5><%= title %> <small>(<a href="#" class="edit">редактировать</a>/<a href="#" class="destroy-question">удалить</a>)</small></h5>
 			<% var $i=1;   _.each(body, function(val, key) { %>
 			<label for="radio_<%= $i %>_<%= order %>_<%= id %>"><input type="radio" name="radio_<%= $i %>_<%= order %>_<%= id %>" id="radio_<%= $i %>_<%= order %>_<%= id %>"> 
 				<%= val.description %>
@@ -123,14 +123,16 @@
 			<% $i++; }); %>
 		</fieldset>
 	</script>
-	<script type="text/template" id="js-create-question-mc-form">
-		<h4 class="t-modal__header"><% title %></h4>
+	<script type="text/template" id="js-create-question--mc-form">
+		<h4 class="t-modal__header js-form--mc-title-mapping"><%= title %></h4>
 			<div class="t-modal__body">
 					<label for="js-title">Введите вопрос:</label>
-					<input class="input-text" type="text" id="js-title" name="js-title" value="<%= title %>" />
+					<input class="input-text js-form--mc-input-title" type="text" id="js-title" name="js-title" value="<%= title %>" />
 					
 					<label for="js-answers">Варианты строк:</label>
 					<textarea class="large" name="js-answers" id="js-answers" rows="4" placeholder="Введите каждый вариант в отдельной строке"></textarea>
+
+					<label for="js-options--required"><input type="checkbox" id="js-options--required"/>  Ответ на вопрос обязателен?</label>
 		</div>
 		<div class="t-modal__footer">
 			<hr />
@@ -143,14 +145,17 @@
 		</div>
 		
 	</script>
-	<script type="text/template" id="js-edit-question-mc-form">
-		<h4 class="t-modal__header"><% title %></h4>
+	<script type="text/template" id="js-edit-question--mc-form">
+		<h4 class="t-modal__header js-form--mc-title-mapping"><%= title %></h4>
 			<div class="t-modal__body">
 					<label for="js-title-<%= id %>">Введите вопрос:</label>
-					<input class="input-text" type="text" id="js-title-<%= id %>" name="js-title-<%= id %>" value="<%= title %>" />
+					<input class="input-text js-form--mc-input-title" type="text" id="js-title-<%= id %>" name="js-title-<%= id %>" value="<%= title %>" />
 					
 					<label for="js-answers-<%= id %>">Варианты строк:</label>
 					<textarea class="large" name="js-answers-<%= id %>" id="js-answers-<%= id %>" rows="4" placeholder="Введите каждый вариант в отдельной строке"></textarea>
+					
+					<label for="js-options--required-<%= id %>"><input type="checkbox" id="js-options--required-<%= id %>" <% if (is_required) { %>checked <% } %>/>  Ответ на вопрос обязателен?</label>
+					
 		</div>
 		<div class="t-modal__footer">
 			<hr />

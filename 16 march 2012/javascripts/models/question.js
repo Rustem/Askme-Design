@@ -26,14 +26,7 @@ var Askme_Question = Backbone.Model.extend({
 	},
 	
 	destroy_question: function () {
-		this.destroy({
-			success: function(model, resp) {
-				alert('destroyed successfuly');
-			},
-			error: function(model, resp) {
-				alert('not destroyed! Error!');
-			}
-		});
+		this.destroy();
 	}
 });
 // in order not to create a copy of new function populateBody during each new instance of question 
@@ -62,7 +55,8 @@ var Askme_MultipleChoice_Question = Askme_Question.extend({
 	},
 	defaults: {
 		title: "Multiple Choice Question",
-		order: 0
+		order: 0,
+		is_required: false
 	}
 });
 
@@ -74,6 +68,19 @@ var Askme_Essay_Question = Askme_Question.extend({
 	},
 	defaults: {
 		title: "Essay Question",
-		order: 0
+		order: 0,
+		is_required: false
 	}
 });
+
+var Askme_RatingScale_Question = Askme_Question.extend({
+	body: function() {
+		return {"answer": "This is fucking shit long long lonog answer which is never been published because "
+							+ "of authenticity"};
+	},
+	defaults: {
+		title: "Rating Scale Question",
+		order: 0,
+		is_required: false
+	}
+})

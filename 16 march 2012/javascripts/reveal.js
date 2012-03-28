@@ -82,11 +82,10 @@
       modal.bind('reveal:open.reveal', openAnimation);
 
       function closeAnimation() {
-        alert('executed');
+        //alert('executed');
         if (!locked) {
           lockModal();
           if (options.animation === "fadeAndPop") {
-            alert('executed');
             modal.animate({
               "top":  $(document).scrollTop() - topOffset + 'px',
               "opacity": 0

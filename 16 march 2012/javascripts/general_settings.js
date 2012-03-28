@@ -5,13 +5,14 @@ $.globals = {
 
 		// naming conventions
 		questionTemplateForms: [
-			{mc: {render: "#js-render-question--mc-form", create: "#js-create-question-mc-form", edit: "#js-edit-question-mc-form"}},
-			{essay: {render: "#js-render-question--essay-form", create: "#js-create-question-essay-form", edit: "#js-edit-question-essay-form"}},
-			{rs: {render: "#js-render-question--rs-form", create: "#js-create-question-rs-form", edit: "#js-edit-question-rs-form"}}
+			{mc: {id: 'mul-choice', jqId: '#mul-choice', render: "#js-render-question--mc-form", create: "#js-create-question--mc-form", edit: "#js-edit-question--mc-form"}},
+			{essay: {id: 'essay', jqId: '#essay', render: "#js-render-question--essay-form", create: "#js-create-question--essay-form", edit: "#js-edit-question--essay-form"}},
+			{rs: {id: 'rating-scale', jqId: '#rating-scale', render: "#js-render-question--rs-form", create: "#js-create-question--rs-form", edit: "#js-edit-question--rs-form"}}
 		],
 		triggeredElementClasses: [
-			{save: ".js-modal--apply",
-			 close: ".js-modal--close"}
+			{save: "click .js-modal--apply",
+			 save: "dblclick .js-modal--apply",
+			 close: "click .js-modal--close"}
 		]
 }
 
@@ -26,9 +27,6 @@ $(function () {
 		settings: {
 
 			// askme settings	
-
-			
-
 			logoButton: $("#logo"),
 			stripes: [
 				{box:"#box0", counter:"#countdown0"},

@@ -16,17 +16,24 @@
 			 Section.fetch();
 		
 			 this.href_question = $(this.el);
-			 alert(this.href_question.html());
+			 
 		},
 		
 		load_create_new_question: function(event) {
 			// tomorrow
 			event.preventDefault();
-			if(event.target.id == 'mul-choice') {
-				
+			var targetId = event.target.id;
+			if(targetId == $.globals.questionTemplateForms[0].mc.id) {
+				new Askme_MultipleChoice_QuestonEdit_View({model: new Askme_MultipleChoice_Question()}).render();
+			}
+			else if(targetId == $.globals.questionTemplateForms[1].essay.id) {
+				new Askme_Essay_QuestionEdit_View({model: new Askme_Essay_Question()}).render();
+			}
+			else if(targetId = $.globals.questionTemplateForms[2].rs.id) {
+				new Askme_RatingScale_QuestionEdit_View({model: new Askme_RatingScale_Question()}).render();
 			}
 			
-			new Askme_QuestionEdit_View({model: new Askme_Question()}).render();
+			
 		},
 		
 		addOne: function(question) {
@@ -35,7 +42,6 @@
 		},
 		
 		addAll: function() {
-			alert('reset');
 			window.Section.each(this.addOne);
 			//alert(this.$("ol").html());
 		}

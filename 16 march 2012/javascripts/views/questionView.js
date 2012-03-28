@@ -3,7 +3,6 @@
  */
  $(function() {
 	
-	alert(JSON.stringify($.globals.questionTemplateForms));
 	Askme_Question_View = Backbone.View.extend({
 		
 		// template to render
@@ -13,14 +12,14 @@
 		events: {
 			"dblclick":			"edit",
 			"click .edit":  	"edit",
-			"click .destroy": 	"del"
+			"click .destroy-question": 	"del"
 		},
 		
 		initialize: function() {
 
 			_.bindAll(this, 'render', 'edit', 'del');
 			this.model.bind('change', this.render, this);
-			this.model.bind('destroy', this.del, this);
+			
 
 			//this.model.bind('change', this.render, this);
 		},
@@ -33,29 +32,60 @@
 		},
 		
 		edit: function(e) {
-			alert('editable');
+			e.preventDefault();
 			new Askme_QuestionEdit_View({model: this.model}).render();
 			//$($(e.target).parents('li')[0]).html(compiledTemplate(this.model.toJSON()));
 		},
 		
 		del: function(e) {
-			//e.preventDefault();
-			var destroy = confirm('Вы уверены, что хотите удалить этот вопрос?');
-			if(destroy) {
-				alert('sure');
-				window.Section.remove(this.model);
-				$(this.el).remove();
+			//e.prevenDefault();
+			var del = confirm('Вы уверены, что хотите удалить этот вопрос?');
+			e.preventDefault();
+			if(del) {
+				try {
+					//this.undelegateEvents();
+					$(this.el).remove();
+					this.model.destroy_question();
+				}
+				catch(e) {
+					console.log(e.message);
+				}
 			}
+
 		}
 	});
 
 	<!-- -->
 	Askme_MultipleChoice_Question_View = Askme_Question_View.extend({
-		
+		template: _.template($($.globals.questionTemplateForms[0].mc.render).html()),		// will be mc tempalte
+		initialize: function() {
+				Askme_Question_View.prototype.initialize.call();
+		},
+		render: function() {
+			Askme_Question_View.prototype.render.call();
+		}
+	});
+
+	Askme_Essay_Question_View = Askme_Question_View.extend({
+		template: _.template($($.globals.questionTemplateForms[0].mc.render).html()),  // will be essay template as soon as possible
+		initialize: function() {
+				Askme_Question_View.prototype.initialize.call();
+		},
+		render: function() {
+			Askme_Question_View.prototype.render.call();
+		}
 	});
 
 	Askme_RatingScale_Question_View = Askme_Question_View.extend({
-
+		template: _.template($($.globals.questionTemplateForms[0].mc.render).html()),		// will be rs tempalte
+		initialize: function() {
+				Askme_Question_View.prototype.initialize.call();
+		},
+		render: function() {
+			Askme_Question_View.prototype.render.call();
+		}
 	});
+
+
 	
 });
