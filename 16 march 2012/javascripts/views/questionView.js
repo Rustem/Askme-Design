@@ -13,7 +13,7 @@
 		events: {
 			"dblclick":			"edit",
 			"click .edit":  	"edit",
-			"click .delete": 	"del"
+			"click .destroy": 	"del"
 		},
 		
 		initialize: function() {
@@ -38,8 +38,14 @@
 			//$($(e.target).parents('li')[0]).html(compiledTemplate(this.model.toJSON()));
 		},
 		
-		del: function() {
-			alert('delitable');
+		del: function(e) {
+			//e.preventDefault();
+			var destroy = confirm('Вы уверены, что хотите удалить этот вопрос?');
+			if(destroy) {
+				alert('sure');
+				window.Section.remove(this.model);
+				$(this.el).remove();
+			}
 		}
 	});
 

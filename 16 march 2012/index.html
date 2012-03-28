@@ -115,7 +115,7 @@
 	<!-- form templates (patterns)  -->
 	<script type="text/template" id="js-render-question--mc-form">
 		<fieldset>
-			<h5><%= title %> <small>(<a href="#" class="edit">редактировать</a>)</small></h5>
+			<h5><%= title %> <small>(<a href="#" class="edit">редактировать</a>/<a href="#" class="destroy">удалить</a>)</small></h5>
 			<% var $i=1;   _.each(body, function(val, key) { %>
 			<label for="radio_<%= $i %>_<%= order %>_<%= id %>"><input type="radio" name="radio_<%= $i %>_<%= order %>_<%= id %>" id="radio_<%= $i %>_<%= order %>_<%= id %>"> 
 				<%= val.description %>

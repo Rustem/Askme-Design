@@ -39,10 +39,19 @@ Askme_Section = Backbone.Collection.extend({
 window.Section = new Askme_Section();
 
 window.Section.on("add", function(qq) {
-				alert("created" + qq.get("id"));
-			});
-window.Section.on("remove", function(qq) {
-	alert(qq.get("title") + " created!");
+	alert(qq.title + " has been successfuly added to the section");
+});
+window.Section.on("remove", function(curQuestion) {
+	//curQuestion.destroy();
+	curQuestion.destroy({
+		success: function(model, response) {
+			console.log(JSON.stringify(response));
+		},
+		error: function() {
+			console.log("Error occured during destroying a question object from the section!");
+		}
+	});
+
 });
 			
 			
