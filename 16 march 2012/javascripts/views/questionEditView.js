@@ -3,15 +3,21 @@ $(function() {
 
 Askme_QuestionEdit_View = Backbone.View.extend({
 	events: {
-		"click .js-modal--apply" 		: "save",
-		"click .cancel"					: "cancel",
-		"submit .js-modal--apply"		: "save",
-		"keypress .js-form--mc-input-title" : "bindTitle",
-		"keydown .js-form--mc-input-title" : "bindTitleOnSpecialChars"
+		"click .js-modal--apply" 					: "save",
+		"click .js-modal--close"					: "cancel",
+		"submit .js-modal--apply"					: "save",
+		"keypress .js-form--mc-input-title" 		: "bindTitle",
+		"keydown .js-form--mc-input-title" 			: "bindTitleOnSpecialChars"
+
 	},
 	specilChars: [18],
+	
 	el: $('.js-mul-choice-form'),
-	template: _.template($($.globals.questionTemplateForms[0].mc.create).html()),
+	// instance variable precompiling template create
+	template: _.template($(Templates.create_mc_question).html()), 
+	// instance variable precompiling template edit
+	templateEdit: _.template($(Templates.edit_mc_question).html()),
+	
 	initialize: function() {
 		_.bindAll(this, 'render', 'unrender', 'save', 'cancel');
 	},
@@ -20,22 +26,19 @@ Askme_QuestionEdit_View = Backbone.View.extend({
 	render: function() {
 		
 		if(!this.model.isNew()) {
-			this.template = _.template($($.globals.questionTemplateForms[0].mc.edit).html());
+
+			$(this.el).html(this.templateEdit(this.model.toJSON()));
 		}
-		$(this.el).html(this.template(this.model.toJSON()));
+		else $(this.el).html(this.template(this.model.toJSON()));
 		
 		$('body').append(this.el);
 		
 		$(this.el).reveal();
 		
 		var body = this.model.get("body");
-		if(body) {
-			var text = '';
-			var textArea = $('textarea[name=js-answers-'+ this.model.id +']');
-			_.each(body, function(val, key) { 
-				textArea.insertAtCaret(val.description+'\n');
-			});
-		}
+		// populate body if not a null or undefined object
+		this.populateBody(body);
+		
 		
 	},
 	unrender: function() {
@@ -57,6 +60,7 @@ Askme_QuestionEdit_View = Backbone.View.extend({
 			this.createOrUpdateModel();
 			
 			this.unrender();
+
 		}
 		catch(e) {
 			console.log("error!!!!" + " " + e.message);
@@ -115,6 +119,15 @@ Askme_QuestionEdit_View = Backbone.View.extend({
 		}
 		
 	},
+	populateBody: function(body) {
+		if(body) {
+			var text = '';
+				var textArea = $('textarea[name=js-answers-'+ this.model.id +']');
+				_.each(body, function(val, key) { 
+					textArea.insertAtCaret(val.description+'\n');
+			});
+		}
+	},
 	createOrUpdateModel: function() {
 		if(!this.model.isNew()) {
 				this.model.save();
@@ -127,20 +140,123 @@ Askme_QuestionEdit_View = Backbone.View.extend({
 });
 
 Askme_MultipleChoice_QuestonEdit_View = Askme_QuestionEdit_View.extend({
-		initialize: function() {
-			Askme_QuestionEdit_View.initialize.call();
-		},
-		render: function() {
-			 Askme_QuestionEdit_View.render.call();
-			//lert(JSON.stringify(events));
-		}
+	template: _.template($(Templates.create_mc_question).html()), 
+	initialize: function() {
+		Askme_QuestionEdit_View.prototype.initialize.call(this);
+	},
+
+	render: function() {
+		 Askme_QuestionEdit_View.prototype.render.call(this);
+		//lert(JSON.stringify(events));
+	}
 
 });
 Askme_Essay_QuestionEdit_View = Askme_QuestionEdit_View.extend({
-	
-});
-Askme_RatingScale_QuestionEdit_View = Askme_QuestionEdit_View.extend({
+	template: _.template($(Templates.create_essay_question).html()),
 
+	templateEdit: _.template($(Templates.edit_essay_question).html()),
+	
+	initialize: function() {
+		Askme_QuestionEdit_View.prototype.initialize.call(this);
+	},
+	
+	render: function() {
+		Askme_QuestionEdit_View.prototype.render.call(this);
+	},
+	storeParams: function() {
+		var title, is_required;
+		if(this.model.isNew()) {
+			title = this.$('input[name=js-title]').val();
+			is_required = this.$('#js-options--required').val();
+		}
+		else {
+			title = this.$('input[name=js-title-'+this.model.id+']').val();
+			is_required = this.$('#js-options--required-'+this.model.id).is(':checked');
+		}
+		if(this.model.isNew()) {
+			this.model.set({
+							"title": title,
+							"order": window.Section.question_order(),
+							"id": this.model.id,
+							"is_required": is_required
+			});
+		}
+		else {
+			this.model.set({
+							"title": title,
+							"is_required": is_required
+			});
+		}
+	}
+});
+
+Askme_RatingScale_QuestionEdit_View = Askme_QuestionEdit_View.extend({
+	template: _.template($(Templates.create_rs_question).html()), // precompile templates
+
+	templateEdit: _.template($(Templates.edit_rs_question).html()),
+
+	initialize: function() {
+		Askme_QuestionEdit_View.prototype.initialize.call(this);
+	},
+
+	render: function() {
+		Askme_QuestionEdit_View.prototype.render.call(this);
+	},
+
+	populateBody: function(body) {
+		var textArea = $('textarea[name=js-row--answers-'+ this.model.id +']');
+		this.populateTextArea(textArea, body.rows);
+		
+		textArea = $('textarea[name=js-col--answers-' + this.model.id + ']');
+		this.populateTextArea(textArea, body.columns);
+	},
+	storeParams: function() {
+		var title = '';
+		var row_answers = [], col_answers = [];
+		var is_required = false, should_shuffled=false; 
+		// postfix will be like '-idofamodel'
+		
+		var postfix = '';
+		postfix = this.model.isNew() ? '' : '-' + this.model.id;
+
+		title = $('input[name=js-title' + postfix + ']').val();
+		row_answers = ($('textarea[name=js-row--answers' + postfix + ']').val()).split('\n');
+		col_answers = ($('textarea[name=js-col--answers' + postfix + ']').val()).split('\n');
+		is_required = $('#js-options--required' + postfix).is(':checked');
+		should_shuffled = $('#js-options--shuffled' + postfix).is(':checked');
+		// avoid unnecessary elements
+		row_answers = _.compact(row_answers);
+		col_answers = _.compact(col_answers);
+		//update model
+		this.model.set({
+						"title" : title,
+						"body" : {"rows" : row_answers, "columns" : col_answers},
+						"is_required" : is_required,
+						"shuffled": should_shuffled
+		});	
+		if(this.model.isNew()) {
+			this.model.set(
+					{
+						"id" : this.model.id,
+						"order" : window.Section.question_order()
+					});
+		}
+
+	},
+
+	populateTextArea: function(textArea, answers) {
+		try {
+			if(!_.isArray(answers)) {
+				return;
+			}
+			_.each(answers, function(answer, idx) {
+				textArea.insertAtCaret(answer+'\n');
+			});
+		}
+		catch(e) {
+			console.log(e.message);
+		}
+	}
 });
 
 });

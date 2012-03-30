@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=device-width" />
+
+	<title>Survey&nbsp;&mdash;&nbsp;проект</title>
+  
+	<!-- Included CSS Files -->
+	<link rel="stylesheet" href="stylesheets/foundation.css">
+	<link rel="stylesheet" href="stylesheets/app.css">
+
+	<!--[if lt IE 9]>
+	<link rel="stylesheet" href="stylesheets/ie.css">
+	<![endif]-->
+
+
+	<!-- IE Fix for HTML5 Tags -->
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+
+	<!-- container -->
+	<div class="container">
+		
+		<header>
+			<div class="row" style="padding-top: 24px;">
+				<div class="three columns">
+					<h1>Ask Me</h1>
+				</div>
+				<div class="four columns offset-by-five" style="padding-top: 30px;">
+					<p style="margin-bottom: 12px; text-align: right;">
+						<a href="#">Настройки аккаунта</a> | <a href="#">Помощь</a> | <a href="front.html">Выйти</a>
+					</p>
+				</div>
+			</div>
+			<hr />
+			
+			<div class="row">
+				<nav class="twelve columns">
+					<ul class="nav-bar">
+						<li><a class="main" href="all projects.html#projects">Назад к проектам</a></li>
+						<li class="has-flyout">
+							<a href="#" class="main">Тарифные планы</a>
+							<a href="#" class="flyout-toggle"><span></span></a>
+							<div class="flyout medium">
+								<ul>
+									<li>
+										<h5><a href="#">Instant</a></h5>
+										<p style="margin-bottom: 6px;">$19.99 за опрос</p>
+										<hr/>
+									</li>
+									<li>
+										<div class="panel" style="padding: 12px;">
+											<h5><a href="#">Regular</a> (наиболее популярный)</h5>
+											<p>$299 в год или $18 в месяц</p>
+										</div>
+										<hr/>
+									</li>
+									<li>
+										<h5><a href="#">Professional</a></h5>
+										<p style="margin-bottom: 6px;">$500 в год</p>
+										<hr/>
+									</li>
+								</ul>
+							</div>
+						</li>
+						<li><a class="main" href="#">Учебные материалы</a></li>
+						<li><a class="main" href="#">Поддержка</a></li>
+						<li><a class="main" href="#">Блог</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+	
+		<div class="row">
+			<div class="twelve columns">
+				<div class="row">
+					<div class="two columns">
+						<img style="width: 100%; height: 9em; margin-bottom: 1em; background-color: #eaeaea;" src="" alt="" />
+					</div>
+					<div class="seven columns">
+						<h3 style="font-weight: normal;"><strong>Проект:</strong> Уровень удовлетворенности клиентов</h3>
+						<p>Цели карьерного роста клиентов, их опыт работы и приоритеты. Для повышения качества тренингов.</p>
+					</div>
+					<div class="three columns" style="text-align: right; padding-top: 12px;">
+						<a href="#" class="small white radius button"><i class="icon">✎</i>Редактировать проект</a>
+					</div>
+				</div>
+				
+				<a href="create survey.html" class="large nice radius button">Создать опрос</a>
+				
+				<section style="margin-top: 6px; padding-top:12px; background-color: #F4F4F4;">
+					<h4 style="padding: 0 6px;">Опросы</h4>
+					<hr style="margin-bottom: 12px;"/>
+					<div style="padding: 0.5em 1em; background-color: #dee3e9; margin-bottom: 1.5em;">
+						<input type="search" name="" value="" placeholder="Фильтр по слову" />
+						<ul style="display: inline;">
+							<li style="display: inline;"><a href="#"><span class="blue round label">Мнение&nbsp;&nbsp;| 23</span></a></li>
+							<li style="display: inline;"><a href="#"><span class="blue round label">Beeline&nbsp;&nbsp;| 12</span></a></li>
+							<li style="display: inline;"><a href="#"><span class="white round label">Inside&nbsp;&nbsp;| 7</span></a></li>
+							<li style="display: inline;"><a href="#"><span class="white round label">Карьерный рост&nbsp;&nbsp;| 3</span></a></li>
+							<li style="display: inline; border-left: 1px solid #444; margin-left: 12px; padding-left: 6px;"><a href="#"><span class="blue round label">Кастомный фильтр</span></a></li>
+							<li style="display: inline; border-left: 1px solid #444; margin-left: 12px; padding-left: 6px;"><a href="#">Очистить</a></li>
+						</ul>
+					</div>
+					<ul class="survey-list">
+						<li class="row survey">
+							<ul class="two columns survey-menu">
+								<li>
+									On/off
+								</li>
+								<li><a href="#">Методы сбора</a></li>
+								<li><a href="#">Редкатировать</a></li>
+								<li><a href="#">Удалить</a></li>
+							</ul>
+							<div class="ten columns">
+								<h4><a href="#" >Название опроса. Очень-очень длинное название опроса.</a></h4>
+								<p class="date">23/03/12</p>
+								<p class="stats">Ответов: <span>3457</span>. <a href="#">Показать отчеты</a></p>
+								<p>Тэг, тэг, тэг</p>
+							</div>
+						</li>
+						<li class="row survey">
+							<ul class="two columns survey-menu">
+								<li>On/off</li>
+								<li><a href="#">Методы сбора</a></li>
+								<li><a href="#">Редкатировать</a></li>
+								<li><a href="#">Удалить</a></li>
+							</ul>
+							<div class="ten columns">
+								<h4><a href="#" >Опыт работы: стажировка в Microsoft Reseach</a></h4>
+								<p class="date">23/03/12</p>
+								<p class="stats">Ответов: <span>3457</span>. <a href="#">Показать отчеты</a></p>
+								<p>Тэг, тэг, тэг</p>
+							</div>
+						</li>
+						<li class="row survey">
+							<ul class="two columns survey-menu">
+								<li>On/off</li>
+								<li><a href="#">Методы сбора</a></li>
+								<li><a href="#">Редкатировать</a></li>
+								<li><a href="#">Удалить</a></li>
+							</ul>
+							<div class="ten columns">
+								<h4><a href="#" >Facebook Page Inforgraphics</a></h4>
+								<p class="date">23/03/12</p>
+								<p class="stats">Ответов: <span>3457</span>. <a href="#">Показать отчеты</a></p>
+								<p>Тэг, тэг, тэг</p>
+							</div>
+						</li>
+					</ul>
+					
+				</section>
+				<section>
+					<h4>Адресная книга</h4>
+				</section>
+			</div>
+		</div>
+
+		
+				
+		<hr/>
+		
+			<section class="row">
+				
+				<div class="six columns">
+					<h4 class="subheader">Вам будет интересно</h4>
+					<hgroup>
+						<h4><small>История клиента:</small></h4>
+						<h4>Deloitte goes supernatural</h4>
+					</hgroup>
+					<div><p>View reports, add new subscribers and manage your lists with MailChimp's iPhone and Android apps.</p></div>
+					<p><a class="small radius white button" href="#">Читать дальше &rarr;</a></p>
+				</div>
+				<div class="six columns">
+					<h4 class="subheader">Учебные материалы offline:</h4>
+					<div class="row">
+						<div class="three columns">
+							<img style="width: 100%; height: 120px; background-color: #000; color: #fff;" alt="book-1"/>
+							<p>Book-1</p>
+						</div>
+						<div class="three columns">
+							<img style="width: 100%; height: 120px; background-color: #000; color: #fff;" alt="book-1"/>
+							<p>Book-1</p>
+						</div>
+						<div class="three columns">
+							<img style="width: 100%; height: 120px; background-color: #000; color: #fff;" alt="book-1"/>
+							<p>Book-1</p>
+						</div>
+						<div class="three columns">
+							<img style="width: 100%; height: 120px; background-color: #000; color: #fff;" alt="book-1"/>
+							<p>Book-1</p>
+						</div>
+						<p>Остальные руководства можно посмотреть <a href="#">здесь</a>.</p>
+					</div>
+					
+			</section>
+		
+		<footer>
+			<hr style="margin-top: 60px;"/>
+			<div class="row">
+				<div class="twelve columns">
+					<ul class="breadcrumbs">
+						<li><a href="#">Home</a></li>
+						<li><a href="#">Features</a></li>
+						<li class="unavailable"><a href="#">Gene Splicing</a></li>
+						<li class="current"><a href="#">Home</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="row" style="padding-bottom: 12px;">
+				<div class="three columns"><input style="width: 100%;" type="search" placeholder="Поиск"/></div>
+			</div>
+			<div class="row">
+				<div class="three columns">
+					<h5>About Us</h5>
+					<ul>
+						<li style="margin-bottom: 0;"><a href="#">About Survey.kz</a></li>
+						<li style="margin-bottom: 0;"><a href="#">Jobs</a></li>
+						<li style="margin-bottom: 0;"><a href="#">Customer stories</a></li>
+						<li style="margin-bottom: 0;"><a href="#">Press resources</a></li>
+						<li style="margin-bottom: 0;"><a href="#">Press releases</a></li>
+						<li style="margin-bottom: 0;"><a href="#">Brand assets</a></li>
+					</ul>
+				</div>
+				<div class="three columns">
+					<h5>Connect With Us</h5>
+					<ul>
+						<li style="margin-bottom: 0;"><a href="#">Integrations &amp; Plugins</a></li>
+						<li style="margin-bottom: 0;"><a href="#">Survey API</a></li>
+					</ul>
+				</div>
+				<div class="three columns">
+					<h5>Contact Us</h5>
+					<ul>
+						<li style="margin-bottom: 0;"><a href="#">Contact Survey</a></li>
+						<li style="margin-bottom: 0;"><a href="#">Partner with us</a></li>
+						<li style="margin-bottom: 0;"><a href="#">Survey Status</a></li>
+					</ul>
+				</div>
+				<div class="three columns">
+					<h5>Legal Info</h5>
+					<ul>
+						<li style="margin-bottom: 0;"><a href="#">Terms of Use</a></li>
+						<li style="margin-bottom: 0;"><a href="#">Privacy Policy</a></li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="row" style="text-align: center; margin-bottom: 120px; margin-top: 24px;">
+				(c) 2012 All Rights Reserved. Survey
+			</div>
+		</footer>
+
+	</div>
+	<!-- container -->
+
+
+
+
+	<!-- Included JS Files -->
+	<script src="javascripts/jquery.min.js"></script>
+	<script src="javascripts/modernizr.foundation.js"></script>
+	<script src="javascripts/foundation.js"></script>
+	<script src="javascripts/app.js"></script>
+
+</body>
+</html>

@@ -14,7 +14,9 @@
 			 Section.bind('all',     this.render);
 			 
 			 Section.fetch();
-		
+			 var source = Templates.question;
+
+			
 			 this.href_question = $(this.el);
 			 
 		},
@@ -37,7 +39,18 @@
 		},
 		
 		addOne: function(question) {
-			var view = new Askme_Question_View({model: question});
+			var view = null;
+
+			//var view = new Askme_Essay_Question_View({model: question});
+			if(question.get("type") == "mc") {
+				view = new Askme_MultipleChoice_Question_View({model: question});
+			}
+			else if(question.get("type") == "essay") {
+				view = new Askme_Essay_Question_View({model: question});
+			}
+			else if(question.get("type") == "rs") {
+				view = new Askme_RatingScale_Question_View({model: question});
+			}
 			this.$(".nine .nice ol").append(view.render().el);
 		},
 		

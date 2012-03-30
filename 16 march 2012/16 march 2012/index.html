@@ -1,0 +1,223 @@
+﻿<!DOCTYPE html>
+
+<head>
+	<meta charset="utf-8" />
+
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=device-width" />
+
+	<title>Survey Interaction</title>
+  
+	<!-- Included CSS Files -->
+	<link rel="stylesheet" href="stylesheets/foundation.css">
+	<link rel="stylesheet" href="stylesheets/app.css">
+	
+	<!-- libs -->
+	<script type="text/javascript" src="javascripts/jquery.min.js"></script>
+	<script type="text/javascript" src="javascripts/jquery_helpers.js"></script>
+	<script type="text/javascript" src="javascripts/templates.js"></script>
+	
+	<script type="text/javascript" src="javascripts/general_settings.js"></script>
+	
+	<script type="text/javascript" src="javascripts/reveal.js"></script>
+	<script type="text/javascript" src="javascripts/underscore.js"></script>
+	<script type="text/javascript" src="javascripts/backbone.js"></script>
+	<script type="text/javascript" src="javascripts/backbone.localStorage.js"></script>
+	<script type="text/javascript" src="javascripts/json2.js"></script>
+	<!-- my code -->
+	<script type="text/javascript" src="javascripts/models/question.js"></script>
+	<script type="text/javascript" src="javascripts/models/section.js"></script>
+	<script type="text/javascript" src="javascripts/controller/askme_controller.js"></script>
+	<script type="text/javascript" src="javascripts/views/questionView.js"></script>
+	<script type="text/javascript" src="javascripts/views/questionEditView.js"></script>
+	
+	<script type="text/javascript" src="javascripts/views/sectionView.js"></script>
+	
+	
+	
+	
+	
+	
+</head>
+<script type="text/javascript">
+		var App = {
+			Views:  {},
+			Controllers: {},
+			Models: {},
+			Collections: {},
+			init: function() {
+				new Askme_Controller();
+				Backbone.history.start();
+			}
+		};
+	
+		$(function() {
+			
+			
+		});
+	</script>
+<body>
+	
+	<div class="container">
+		<form type="text/template" id="myModal" class="t-modal nice js-mul-choice-form">
+			
+		</form>
+	<hgroup style="text-align:center;">
+		<h1>Survey Interaction with Backbone.js	</h1>
+		<h5>Created by Rustem Kamun </h5>
+	</hgroup>
+	
+	<div class="row">
+		<div class="three columns">
+		
+			<div class="palette">
+										
+				<a href="#" class="nice radius button">Сохранить</a>
+				<h5 style="padding-top: 1.5em;">Инструменты</h5>
+				<hr />
+				<a href="#">Демографические данные</a>
+				<hr />
+				<ul>
+					<!--Отсортировано по частоте использования-->
+					<li><a href="#create-question-form" id="mul-choice" class="create-q">Несколько вариантов ответа</a></li>
+					<li><a href="#create-question-form" id="essay" class="create-q">Открытый вопрос</a></li>
+					<li><a href="#create-question-form" id="rating-scale" class="create-q">Матрица</a></li>
+					<li><a href="#create-question-form" id="mul-choice" class="create-q">Оценка</a></li>
+				</ul>
+				<hr />
+				<ul>
+					<!--Отсортировано по алфавиту, потому что нестандартные поля, не так часто используются-->
+					<li><a href="#">Дата и время</a></li>
+					<li><a href="#">Изображение</a></li>
+					<li><a href="#">Ссылка</a></li>
+					<li><a href="#">Текст</a></li>
+					<li><a href="#">Числа</a></li>
+				</ul>
+				<hr />
+				<a href="#">Логика пропуска</a>
+			</div>
+								
+		</div>
+		<div class="nine columns js-questions--layout">
+			<form class="nice">
+				<ol>
+					
+				</ol>
+			</form>
+		</div>
+	</div>
+	<div class="row">
+		<div class="three columns"></div>
+		<div class="nine columns">
+			<div id="create-question-form" name="create-question-form">
+				
+			</div>
+		</div>
+	</div>
+	<!-- form templates (patterns)  -->
+	<script type="text/template" id="js-render-question--mc-form">
+		<fieldset>
+			<h5><%= title %> <small>(<a href="#" class="edit">редактировать</a>/<a href="#" class="destroy-question">удалить</a>)</small></h5>
+			<% var $i=1;   _.each(body, function(val, key) { %>
+			<label for="radio_<%= $i %>_<%= order %>_<%= id %>"><input type="radio" name="radio_<%= order %>_<%= id %>" id="radio_<%= $i %>_<%= order %>_<%= id %>"> 
+				<%= val.description %>
+			</label>
+			<% $i++; }); %>
+		</fieldset>
+	</script>
+	<script type="text/template" id="js-create-question--mc-form">
+		<h4 class="t-modal__header js-form--mc-title-mapping"><%= title %></h4>
+			<div class="t-modal__body">
+					<label for="js-title">Введите вопрос:</label>
+					<input class="input-text js-form--mc-input-title" type="text" id="js-title" name="js-title" value="<%= title %>" />
+					
+					<label for="js-answers">Варианты строк:</label>
+					<textarea class="large" name="js-answers" id="js-answers" rows="4" placeholder="Введите каждый вариант в отдельной строке"></textarea>
+
+					<label for="js-options--required"><input type="checkbox" id="js-options--required"/>  Ответ на этот вопрос обязателен?</label>
+		</div>
+		<div class="t-modal__footer">
+			<hr />
+			<div class="row">
+				<div class="six columns"><a href="#" class="small nice radius button js-modal--apply">Применить</a></div>
+				<div class="six columns" style="text-align: right;">
+					<a href="#" class="small white radius button js-modal--close">Отменить изменения</a>
+				</div>
+			</div>
+		</div>
+		
+	</script>
+	<script type="text/template" id="js-edit-question--mc-form">
+		<h4 class="t-modal__header js-form--mc-title-mapping"><%= title %></h4>
+			<div class="t-modal__body">
+					<label for="js-title-<%= id %>">Введите вопрос:</label>
+					<input class="input-text js-form--mc-input-title" type="text" id="js-title-<%= id %>" name="js-title-<%= id %>" value="<%= title %>" />
+					
+					<label for="js-answers-<%= id %>">Варианты строк:</label>
+					<textarea class="large" name="js-answers-<%= id %>" id="js-answers-<%= id %>" rows="4" placeholder="Введите каждый вариант в отдельной строке"></textarea>
+					
+					<label for="js-options--required-<%= id %>"><input type="checkbox" id="js-options--required-<%= id %>" <% if (is_required) { %>checked <% } %>/>  Ответ на этот вопрос обязателен?</label>
+					
+		</div>
+		<div class="t-modal__footer">
+			<hr />
+			<div class="row">
+				<div class="six columns"><a href="#" class="small nice radius button js-modal--apply">Применить</a></div>
+				<div class="six columns" style="text-align: right;">
+					<a href="#" class="small white radius button js-modal--close">Отменить изменения</a>
+				</div>
+			</div>
+		</div>
+		
+	</script>
+	<script type="text/template" id="js-render-question--essay-form">
+		<fieldset>
+			<h5><%= title %> <small>(<a href="#" class="edit">редактировать</a>/<a href="#" class="destroy-question">удалить</a>)</small></h5>
+			<label for="js-answer-<%= id %>"></label>
+			<textarea class="large" name="js-answer-<%= id %>" id="js-answer-<%= id %>" rows="4" placeholder="Пишите то, что думаете"></textarea>
+		</fieldset>
+	</script>
+	<script type="text/template" id="js-create-question--essay-form">
+		<h4 class="t-modal__header js-form--mc-title-mapping"><%= title %></h4>
+			<div class="t-modal__body">
+					<label for="js-title">Введите вопрос:</label>
+					<input class="input-text js-form--mc-input-title" type="text" id="js-title" name="js-title" value="<%= title %>" />
+					
+					<label for="js-options--required">
+							<input type="checkbox" id="js-options--required"/>  Ответ на этот вопрос обязателен?
+					</label>
+		</div>
+		<div class="t-modal__footer">
+			<hr />
+			<div class="row">
+				<div class="six columns"><a href="#" class="small nice radius button js-modal--apply">Применить</a></div>
+				<div class="six columns" style="text-align: right;">
+					<a href="#" class="small white radius button js-modal--close cancel">Отменить изменения</a>
+				</div>
+			</div>
+		</div>
+		
+	</script>
+	<script type="text/template" id="js-edit-question--essay-form">
+		<h4 class="t-modal__header js-form--mc-title-mapping"><%= title %></h4>
+			<div class="t-modal__body">
+					<label for="js-title-<%= id %>">Введите вопрос:</label>
+					<input class="input-text js-form--mc-input-title" type="text" id="js-title-<%= id %>" name="js-title-<%= id %>" value="<%= title %>" />
+					
+					<label for="js-options--required-<%= id %>">
+							<input type="checkbox" id="js-options--required-<%= id %>" <% if(is_required) {%> checked <% } %>/>  Ответ на этот вопрос обязателен?
+					</label>
+		</div>
+		<div class="t-modal__footer">
+			<hr />
+			<div class="row">
+				<div class="six columns"><a href="#" class="small nice radius button js-modal--apply">Применить</a></div>
+				<div class="six columns" style="text-align: right;">
+					<a href="#" class="small white radius button js-modal--close">Отменить изменения</a>
+				</div>
+			</div>
+		</div>
+		
+	</script>
+ </div>
+</body>

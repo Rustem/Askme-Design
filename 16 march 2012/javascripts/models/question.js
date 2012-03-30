@@ -21,7 +21,8 @@ var Askme_Question = Backbone.Model.extend({
 	defaults: {
 		title: "Default Question Title",
 		author: "Rustem Kamun",
-		order: 0
+		order: 0,
+		type: 'mc'
 		
 	},
 	
@@ -56,7 +57,8 @@ var Askme_MultipleChoice_Question = Askme_Question.extend({
 	defaults: {
 		title: "Multiple Choice Question",
 		order: 0,
-		is_required: false
+		is_required: false,
+		type: 'mc'
 	}
 });
 
@@ -69,18 +71,32 @@ var Askme_Essay_Question = Askme_Question.extend({
 	defaults: {
 		title: "Essay Question",
 		order: 0,
-		is_required: false
+		is_required: false,
+		type: 'essay'
 	}
 });
 
 var Askme_RatingScale_Question = Askme_Question.extend({
+
+	initialize: function() {
+		if(!this.get("body")) {
+			this.set({"body": this.body()});
+		}
+	},
+
 	body: function() {
-		return {"answer": "This is fucking shit long long lonog answer which is never been published because "
-							+ "of authenticity"};
+		return {"rows": ["rowName1", "rowName2", "rowName3"],
+				"columns": ["colName1", "colName2", "colName3", "colName4"]};
 	},
 	defaults: {
 		title: "Rating Scale Question",
 		order: 0,
-		is_required: false
+		is_required: false,
+		multiple_answers_in_a_row: false,
+		shuffled: false,	// is randomly shown
+		row_placeholder: "Варианты строк:",
+		col_placeholder: "Варианты столбцов:",
+		type: 'rs'
+
 	}
 })

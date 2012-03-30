@@ -15,6 +15,8 @@
 	<!-- libs -->
 	<script type="text/javascript" src="javascripts/jquery.min.js"></script>
 	<script type="text/javascript" src="javascripts/jquery_helpers.js"></script>
+	<script type="text/javascript" src="javascripts/templates.js"></script>
+	
 	<script type="text/javascript" src="javascripts/general_settings.js"></script>
 	
 	<script type="text/javascript" src="javascripts/reveal.js"></script>
@@ -48,9 +50,20 @@
 				Backbone.history.start();
 			}
 		};
-	
 		$(function() {
-			
+			var a = new Askme_RatingScale_Question();
+			var body = a.get("body");
+			// alert(JSON.stringify(a.defaults, null, '\t'));
+			// alert(JSON.stringify(body.columns.length, null, '\t'));
+			// body.rows = _.shuffle(body.rows);
+			// body.columns = _.shuffle(body.columns);
+			// _.each(body.rows, function(row, idx) {
+			// 	_.each(body.columns, function(col, jdx) {
+			// 		alert(idx);
+			// 		alert(row + idx + " " + col + jdx);
+
+			// 	});
+			// });
 			
 		});
 	</script>
@@ -117,7 +130,7 @@
 		<fieldset>
 			<h5><%= title %> <small>(<a href="#" class="edit">редактировать</a>/<a href="#" class="destroy-question">удалить</a>)</small></h5>
 			<% var $i=1;   _.each(body, function(val, key) { %>
-			<label for="radio_<%= $i %>_<%= order %>_<%= id %>"><input type="radio" name="radio_<%= $i %>_<%= order %>_<%= id %>" id="radio_<%= $i %>_<%= order %>_<%= id %>"> 
+			<label for="radio_<%= $i %>_<%= order %>_<%= id %>"><input type="radio" name="radio_<%= order %>_<%= id %>" id="radio_<%= $i %>_<%= order %>_<%= id %>"> 
 				<%= val.description %>
 			</label>
 			<% $i++; }); %>
@@ -132,7 +145,7 @@
 					<label for="js-answers">Варианты строк:</label>
 					<textarea class="large" name="js-answers" id="js-answers" rows="4" placeholder="Введите каждый вариант в отдельной строке"></textarea>
 
-					<label for="js-options--required"><input type="checkbox" id="js-options--required"/>  Ответ на вопрос обязателен?</label>
+					<label for="js-options--required"><input type="checkbox" id="js-options--required"/>  Ответ на этот вопрос обязателен?</label>
 		</div>
 		<div class="t-modal__footer">
 			<hr />
@@ -154,7 +167,7 @@
 					<label for="js-answers-<%= id %>">Варианты строк:</label>
 					<textarea class="large" name="js-answers-<%= id %>" id="js-answers-<%= id %>" rows="4" placeholder="Введите каждый вариант в отдельной строке"></textarea>
 					
-					<label for="js-options--required-<%= id %>"><input type="checkbox" id="js-options--required-<%= id %>" <% if (is_required) { %>checked <% } %>/>  Ответ на вопрос обязателен?</label>
+					<label for="js-options--required-<%= id %>"><input type="checkbox" id="js-options--required-<%= id %>" <% if (is_required) { %>checked <% } %>/>  Ответ на этот вопрос обязателен?</label>
 					
 		</div>
 		<div class="t-modal__footer">
@@ -167,6 +180,147 @@
 			</div>
 		</div>
 		
+	</script>
+	<script type="text/template" id="js-render-question--essay-form">
+		<fieldset>
+			<h5><%= title %> <small>(<a href="#" class="edit">редактировать</a>/<a href="#" class="destroy-question">удалить</a>)</small></h5>
+			<label for="js-answer-<%= id %>"></label>
+			<textarea class="large" name="js-answer-<%= id %>" id="js-answer-<%= id %>" rows="4" placeholder="Пишите то, что думаете"></textarea>
+		</fieldset>
+	</script>
+	<script type="text/template" id="js-create-question--essay-form">
+		<h4 class="t-modal__header js-form--mc-title-mapping"><%= title %></h4>
+			<div class="t-modal__body">
+					<label for="js-title">Введите вопрос:</label>
+					<input class="input-text js-form--mc-input-title" type="text" id="js-title" name="js-title" value="<%= title %>" />
+					
+					<label for="js-options--required">
+							<input type="checkbox" id="js-options--required"/>  Ответ на этот вопрос обязателен?
+					</label>
+		</div>
+		<div class="t-modal__footer">
+			<hr />
+			<div class="row">
+				<div class="six columns"><a href="#" class="small nice radius button js-modal--apply">Применить</a></div>
+				<div class="six columns" style="text-align: right;">
+					<a href="#" class="small white radius button js-modal--close cancel">Отменить изменения</a>
+				</div>
+			</div>
+		</div>
+		
+	</script>
+	<script type="text/template" id="js-edit-question--essay-form">
+		<h4 class="t-modal__header js-form--mc-title-mapping"><%= title %></h4>
+			<div class="t-modal__body">
+					<label for="js-title-<%= id %>">Введите вопрос:</label>
+					<input class="input-text js-form--mc-input-title" type="text" id="js-title-<%= id %>" name="js-title-<%= id %>" value="<%= title %>" />
+					
+					<label for="js-options--required-<%= id %>">
+							<input type="checkbox" id="js-options--required-<%= id %>" <% if(is_required) {%> checked <% } %>/>  Ответ на этот вопрос обязателен?
+					</label>
+		</div>
+		<div class="t-modal__footer">
+			<hr />
+			<div class="row">
+				<div class="six columns"><a href="#" class="small nice radius button js-modal--apply">Применить</a></div>
+				<div class="six columns" style="text-align: right;">
+					<a href="#" class="small white radius button js-modal--close">Отменить изменения</a>
+				</div>
+			</div>
+		</div>
+	</script>
+	
+	<!-- Rating Scale Question -->	
+	<script type="text/template" id="js-render-question--rs-form">
+		<h5><%= title %> <small>(<a href="#" class="edit">редактировать</a>/<a href="#" class="destroy-question">удалить</a>)</small></h5>
+		<table width="100%">
+			<caption></caption>
+			<thead>
+				<tr>
+					<th> </th>
+					<% _.each(body.columns, function(col, idx) { %>
+						<th scope="col" class="text-centered"><%= col %></th>
+					<% }); %>
+				</tr>
+			</thead>
+			<tbody>
+				<% _.each(body.rows, function(row, idx) { %>
+				<tr>
+					<th scope="row" align="left"><%= row %></th>
+					<% if (is_required) { %>
+						<% _.each(body.columns, function(row, idx){ %>
+						<td align="center">
+							<label for="radio_<%= idx %>" style="display:block;"><input type="radio" name="radio_<%= idx %>" value="" /></label>
+						</td>
+						<% }); %>
+					<% } %>
+					<% if (!is_required) { %>
+						<% _.each(body.columns, function(row, idx){ %>
+						<td align="center">
+							<label for="check_<%= idx %>" style="display:block;"><input type="checkbox" name="check_<%= idx %>" value="" /></label>
+						</td>
+						<% }); %>
+					<% } %>
+				</tr>
+				<% }); %>
+			</tbody>
+		</table>
+	</script>
+	
+	<script type="text/template" id="js-create-question--rs-form">
+		<h4 class="t-modal__header js-form--mc-title-mapping"><%= title %></h4>
+			<div class="t-modal__body">
+				<label for="js-title">Введите вопрос:</label>
+				<input class="input-text js-form--mc-input-title" type="text" id="js-title" name="js-title" value="<%= title %>" />
+				
+				<label for="js-row--answers">Варианты строк:</label>
+				<textarea class="large" name="js-row--answers" id="js-row--answers" rows="4" placeholder="<%= row_placeholder %> Введите каждый вариант в отдельной строке"></textarea>
+
+				<label for="js-col--answers">Варианты столбцов:</label>
+				<textarea class="large" name="js-col--answers" id="js-col--answers" rows="4" placeholder="<%= col_placeholder %> Введите каждый вариант в отдельной строке"></textarea>
+				
+				<hr/>
+				<h5>Настройки:</h5>
+				<label for="js-options--required"><input type="checkbox" id="js-options--required"/>  Ответ на этот вопрос обязателен?</label>
+				<label for="js-options--shuffled"><input type="checkbox" id="js-options--shuffled"/>  Расставить варианты ответов в случайном порядке?</label>
+			</div>
+		<div class="t-modal__footer">
+			<hr />
+			<div class="row">
+				<div class="six columns"><a href="#" class="small nice radius button js-modal--apply">Применить</a></div>
+				<div class="six columns" style="text-align: right;">
+					<a href="#" class="small white radius button js-modal--close">Отменить изменения</a>
+				</div>
+			</div>
+		</div>
+	
+	</script>
+	
+	<script type="text/template" id="js-edit-question--rs-form">
+		<h4 class="t-modal__header js-form--mc-title-mapping"><%= title %></h4>
+			<div class="t-modal__body">
+				<label for="js-title-<%= id %>">Введите вопрос:</label>
+				<input class="input-text js-form--mc-input-title" type="text" id="js-title-<%= id %>" name="js-title-<%=id%>" value="<%= title %>" />
+				
+				<label for="js-row--answers-<%= id %>">Варианты строк:</label>
+				<textarea class="large" name="js-row--answers-<%= id %>" id="js-row--answers-<%= id %>" rows="4" placeholder="<%= row_placeholder %> Введите каждый вариант в отдельной строке"></textarea>
+
+				<label for="js-col--answers-<%= id %>">Варианты столбцов:</label>
+				<textarea class="large" name="js-col--answers-<%= id %>" id="js-col--answers-<%= id %>" rows="4" placeholder="<%= col_placeholder %> Введите каждый вариант в отдельной строке"></textarea>
+				<hr/>
+				<h5>Настройки:</h5>
+				<label for="js-options--required-<%= id %>"><input type="checkbox" id="js-options--required-<%= id %>" <% if(is_required) { %> checked <% } %>/>  Ответ на этот вопрос обязателен?</label>
+				<label for="js-options--shuffled-<%= id %>"><input type="checkbox" id="js-options--shuffled-<%= id %>" <% if(shuffled) { %> checked <% } %>/>  Расставить варианты ответов в случайном порядке?</label>
+			</div>
+		<div class="t-modal__footer">
+			<hr />
+			<div class="row">
+				<div class="six columns"><a href="#" class="small nice radius button js-modal--apply">Применить</a></div>
+				<div class="six columns" style="text-align: right;">
+					<a href="#" class="small white radius button js-modal--close">Отменить изменения</a>
+				</div>
+			</div>
+		</div>
 	</script>
 	
  </div>

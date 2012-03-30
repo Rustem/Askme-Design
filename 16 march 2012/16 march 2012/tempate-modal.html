@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<!-- paulirish.com/2008/conditional-stylesheets-vs-css-hacks-answer-neither/ -->
+<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!--> <html lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8" />
+
+	<!-- Set the viewport width to device width for mobile -->
+	<meta name="viewport" content="width=device-width" />
+
+	<title>Survey&nbsp;&mdash;&nbsp;modal template</title>
+  
+	<!-- Included CSS Files -->
+	<link rel="stylesheet" href="stylesheets/foundation.css">
+	<link rel="stylesheet" href="stylesheets/app.css">
+
+	<!--[if lt IE 9]>
+		<link rel="stylesheet" href="stylesheets/ie.css">
+	<![endif]-->
+
+
+	<!-- IE Fix for HTML5 Tags -->
+	<!--[if lt IE 9]>
+		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+
+	<!-- container -->
+	<div class="container">
+		<form id="myModal" class="t-modal nice">
+			<h4 class="t-modal__header">Создание вопроса</h4>
+			<div class="t-modal__body row">
+				<div class="twelve columns">
+						<label for="id1">Введите вопрос:</label>
+						<input class="input-text" type="text" id="id1" name="id1" />
+						<label for="id2">Варианты строк:</label>
+						<textarea class="large" name="id2" id="id2" rows="4" placeholder="Введите каждый вариант в отдельной строке"></textarea>
+				</div>
+			</div>
+			<div class="t-modal__footer">
+				<hr />
+				<div class="row">
+					<div class="six columns"><a href="#" class="small nice radius button">Применить</a></div>
+					<div class="six columns" style="text-align: right;">
+						<a href="#" class="small white radius button js-modal--close">Отменить изменения</a>
+					</div>
+				</div>
+			</div>
+		</form>
+		
+		<div class="row" style="height:600px; background-color: rgba(0,0,0,0.1); margin-top:2em; padding:1em;">
+			<a href="#" class="button" data-reveal-id="myModal">Click Me For A Modal</a>
+			<h1>Modal structure:</h1>
+			<ol>
+				<li>
+					.t-modal<em>#modal-id</em>
+					<ol>
+						<li>.t-modal__header</li>
+						<li>.t-modal__body</li>
+						<li>.t-modal__footer</li>
+					</ol>
+				</li>
+				<li>.t-modal--bg</li>
+			</ol>
+			<ul>
+				<li>
+					Functional elements:
+					<ul>
+						<li>.js-modal--reveal</li>
+						<li>.js-modal--close</li>
+					</ul>
+				</li>
+			</ul>	
+			
+		</div>
+	</div>	
+	<!-- container -->
+
+
+
+
+	<!-- Included JS Files -->
+	<script src="javascripts/jquery.min.js"></script>
+	<script src="javascripts/modernizr.foundation.js"></script>
+	<script src="javascripts/reveal.js"></script>
+	<script src="javascripts/app.js"></script>
+
+</body>
+</html>

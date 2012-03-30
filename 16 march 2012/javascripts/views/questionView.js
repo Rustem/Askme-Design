@@ -6,7 +6,7 @@
 	Askme_Question_View = Backbone.View.extend({
 		
 		// template to render
-		template: _.template($($.globals.questionTemplateForms[0].mc.render).html()), 
+		template: _.template($(Templates.render_mc_question).html()), 
 		tagName: 'li',		// tag to wrap this.el
 		el: null,
 		events: {
@@ -25,15 +25,16 @@
 		},
 		
 		render: function() {
-		   
-			$(this.el).attr('id', 'js-form--'+ this.model.id + '_' + this.model.get("order"));  // add dynamic class to my cur <li>
+		  	$(this.el).attr('id', 'js-form--'+ this.model.id + '_' + this.model.get("order"));  // add dynamic class to my cur <li>
+			
 			$(this.el).html(this.template(this.model.toJSON()));
+			
 			return this;
 		},
 		
 		edit: function(e) {
 			e.preventDefault();
-			new Askme_QuestionEdit_View({model: this.model}).render();
+			new Askme_MultipleChoice_QuestionEdit_View({model: this.model}).render();
 			//$($(e.target).parents('li')[0]).html(compiledTemplate(this.model.toJSON()));
 		},
 		
@@ -59,31 +60,49 @@
 	Askme_MultipleChoice_Question_View = Askme_Question_View.extend({
 		template: _.template($($.globals.questionTemplateForms[0].mc.render).html()),		// will be mc tempalte
 		initialize: function() {
-				Askme_Question_View.prototype.initialize.call();
+				Askme_Question_View.prototype.initialize.call(this);
 		},
 		render: function() {
-			Askme_Question_View.prototype.render.call();
+			Askme_Question_View.prototype.render.call(this);
+			return this;
+		},
+		edit: function(e) {
+			e.preventDefault();
+			new Askme_MultipleChoice_QuestonEdit_View({model: this.model}).render();
 		}
 	});
 
 	Askme_Essay_Question_View = Askme_Question_View.extend({
-		template: _.template($($.globals.questionTemplateForms[0].mc.render).html()),  // will be essay template as soon as possible
+		el: null, 
+		template: _.template($(Templates.render_essay_question).html()),  // will be essay template as soon as possible
 		initialize: function() {
-				Askme_Question_View.prototype.initialize.call();
+				Askme_Question_View.prototype.initialize.call(this);
 		},
 		render: function() {
-			Askme_Question_View.prototype.render.call();
+			Askme_Question_View.prototype.render.call(this);
+			return this;
+		},
+		edit: function(e) {
+			e.preventDefault();
+			new Askme_Essay_QuestionEdit_View({model: this.model}).render();
 		}
 	});
 
 	Askme_RatingScale_Question_View = Askme_Question_View.extend({
-		template: _.template($($.globals.questionTemplateForms[0].mc.render).html()),		// will be rs tempalte
+		el: null, 
+		template: _.template($(Templates.render_rs_question).html()),		// will be rs tempalte
 		initialize: function() {
-				Askme_Question_View.prototype.initialize.call();
+				Askme_Question_View.prototype.initialize.call(this);
 		},
 		render: function() {
-			Askme_Question_View.prototype.render.call();
+			Askme_Question_View.prototype.render.call(this);
+			return this;
+		},
+		edit: function(e) {
+			e.preventDefault();
+			new Askme_RatingScale_QuestionEdit_View({model: this.model}).render();
 		}
+
 	});
 
 

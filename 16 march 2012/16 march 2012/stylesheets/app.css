@@ -1,0 +1,220 @@
+/* Foundation v2.1.5 http://foundation.zurb.com */
+/* Artfully masterminded by ZURB  */
+
+* {
+	/*position: relative;*/
+}
+
+body {
+	cursor: default;
+}
+
+.icon {
+	top: 2px;
+	font: 17px "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+	width: 24px;
+	line-height: 18px;
+	display: inline-block;
+	position: relative;
+}
+.button .icon {
+	font-size: 12px;
+	line-height: 12px;
+}
+
+/* @group Project list */
+
+.project-list {
+	overflow: hidden;
+}
+
+.new-project {
+	width: 23%;
+	height: 24.5em;
+	margin-left: 1%;
+	margin-right: 1%;
+	float: left;
+	overflow: hidden;
+	background-color: #dee3e9;
+}
+
+.new-project>* {
+	padding: 0 5%;
+}
+
+.new-project-menu {
+	width: inherit;
+	padding: 0;
+	position: absolute;
+	height: inherit;
+	text-indent: -9999px;
+	line-height: 3em;
+}
+
+.new-project:hover {
+	background-color: #e7ebef;
+}
+
+.new-project:hover .new-project-menu {
+	text-indent: 1em;
+}
+
+.project-preview {
+	width: 100%;
+	padding: 0;
+	height: 14em;
+	background-color: #eaeaea;
+}
+
+.new-project h4 {
+	font-size: 14px;
+}
+
+/* @end */
+
+/* @group Survey list */
+
+.survey-list {
+	display: block;
+	overflow: hidden;
+}
+
+.survey-list>li {
+	display: block;
+	overflow: hidden;
+	border-bottom: 1px solid #c7c7c7;
+	margin-bottom: 1em;
+}
+
+.survey-list ul {
+	text-align: right;
+}
+
+.survey-menu {
+	opacity: 0.4;	
+}
+
+.survey:hover .survey-menu {
+	opacity: 1;
+}
+
+.survey .date {
+	margin-bottom: 0.5em; color: #999;
+}
+
+.survey .stats {
+	font-size: 15px;
+}
+.survey .stats span {
+	color: #999;
+}
+
+.survey h4 a {
+	color: inherit;
+	text-decoration: underline;
+}
+
+/* @end */
+
+table tr th {
+	text-align: left;
+	font-weight: bold;
+	padding: 8px 10px 9px;
+}
+table tbody tr td {
+	text-align: center;
+}
+
+
+.quest-appearance {
+	
+}
+
+.quest-appearance-preview {
+	width: 100%;
+	height: 14em;
+	text-align: center;
+	background-color: #eaeaea;
+	display: block;
+	margin-bottom: 0.5em;
+}
+
+.quest-appearance-preview .centered.button {
+	margin-top: 6em;
+}
+
+.appearance-settings-preview {
+	margin-top: 0.5em;
+	background-color: #eaeaea;
+	border-top: 1px dotted #333;
+	padding: 0 0.5em;
+}
+
+/* @group Accordion */
+
+.t-accordion-container {
+	background-color: #fafafa;
+	padding: 0.5em 1em 0.5em 1em;
+	min-height: 27em;
+}
+
+.t-accordion-container__heading {
+	border-top: 1px dotted #eaeaea;
+	margin-bottom: 0.5em;
+	padding: 0.5em 0;
+}
+
+.t-accordion-container__heading a {
+	display: block;
+}
+
+.t-accordion-container__input-text {
+	width: 100% !important;
+}
+
+.t-accordion-container__select {
+	width: 100%;
+	font-size: 16px;
+	top: 3px;
+	margin-bottom: 1em;
+}
+
+/* @end */
+
+.t-modal--bg { 
+	position: fixed; 
+	height: 100%;
+	width: 100%;
+	background: #000;
+	z-index: 40;
+	display: none;
+	top: 0;
+	left: 0; 
+}
+
+.t-modal {
+	visibility: hidden;
+	top: 100px; 
+	left: 50%;
+	margin-left: -300px;
+	width: 520px;
+	background-color: #eee;
+	position: absolute;
+	z-index: 41;
+	padding: 30px 40px 34px;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	border-radius: 5px;
+	-moz-box-shadow: 0 0 10px rgba(0,0,0,.4);
+	-webkit-box-shadow: 0 0 10px rgba(0,0,0,.4);
+	box-shadow: 0 0 10px rgba(0,0,0,.4);
+}
+	
+.t-modal.small 		{ width: 200px; margin-left: -140px;}
+.t-modal.medium 	{ width: 400px; margin-left: -240px;}
+.t-modal.large 		{ width: 600px; margin-left: -340px;}
+.t-modal.xlarge 	{ width: 800px; margin-left: -440px;}
+
+.t-modal .row {
+	min-width: 0;
+}

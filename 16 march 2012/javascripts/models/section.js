@@ -39,7 +39,7 @@ Askme_Section = Backbone.Collection.extend({
 window.Section = new Askme_Section();
 
 window.Section.on("add", function(qq) {
-	alert(qq.title + " has been successfuly added to the section");
+	alert(qq.get("title") + " has been successfuly added to the section");
 });
 window.Section.on("remove", function(curQuestion) {
 	curQuestion.destroy();
